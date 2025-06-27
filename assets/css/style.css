@@ -260,8 +260,11 @@ nav button:hover::before {
   text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
 }
 
-/* Glass morphism for all slate-800 elements */
-.bg-slate-800 {
+/* Glass morphism for all slate elements */
+.bg-slate-800, 
+.bg-slate-700,
+.bg-gradient-to-br,
+.bg-gradient-to-b {
   background: rgba(30, 41, 59, 0.7) !important;
   backdrop-filter: blur(20px) !important;
   border: 1px solid rgba(148, 163, 184, 0.2) !important;
@@ -270,7 +273,10 @@ nav button:hover::before {
   overflow: hidden;
 }
 
-.bg-slate-800::before {
+.bg-slate-800::before,
+.bg-slate-700::before,
+.bg-gradient-to-br::before,
+.bg-gradient-to-b::before {
   content: '';
   position: absolute;
   top: 0;
@@ -281,11 +287,17 @@ nav button:hover::before {
   transition: left 0.8s;
 }
 
-.bg-slate-800:hover::before {
+.bg-slate-800:hover::before,
+.bg-slate-700:hover::before,
+.bg-gradient-to-br:hover::before,
+.bg-gradient-to-b:hover::before {
   left: 100%;
 }
 
-.bg-slate-800:hover {
+.bg-slate-800:hover,
+.bg-slate-700:hover,
+.bg-gradient-to-br:hover,
+.bg-gradient-to-b:hover {
   transform: translateY(-8px);
   border-color: rgba(251, 191, 36, 0.3);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -305,17 +317,13 @@ input:focus, select:focus {
   transform: translateY(-2px);
 }
 
-/* Sophisticated result boxes */
-.bg-slate-700 {
-  background: rgba(51, 65, 85, 0.6) !important;
+/* Additional specific styling for result boxes */
+.bg-slate-700.rounded-lg {
   backdrop-filter: blur(15px) !important;
-  border: 1px solid rgba(148, 163, 184, 0.2) !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
 }
 
-.bg-slate-700::before {
+/* Rotating gradient effect for result boxes */
+.bg-slate-700.rounded-lg::before {
   content: '';
   position: absolute;
   top: -50%;
@@ -328,7 +336,7 @@ input:focus, select:focus {
   transition: opacity 0.3s;
 }
 
-.bg-slate-700:hover::before {
+.bg-slate-700.rounded-lg:hover::before {
   opacity: 1;
 }
 
@@ -337,7 +345,7 @@ input:focus, select:focus {
   100% { transform: rotate(360deg); }
 }
 
-.bg-slate-700:hover {
+.bg-slate-700.rounded-lg:hover {
   transform: translateY(-2px);
   border-color: rgba(251, 191, 36, 0.3);
   box-shadow: 0 12px 40px rgba(251, 191, 36, 0.1);

@@ -196,7 +196,7 @@
                   <label class="block text-sm font-medium text-slate-300 mb-2">Year / አመት</label>
                   <input type="number" 
                          x-model.number="etiYear" 
-                         @input="convertToGregorian" 
+                         @input="adjustDayForMonth" 
                          placeholder="2017" 
                          min="1900" 
                          max="2100"
@@ -206,7 +206,7 @@
               
               <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Month / ወር</label>
-                <select x-model.number="etiMonth" @change="convertToGregorian" 
+                <select x-model.number="etiMonth" @change="adjustDayForMonth" 
                         class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white font-ethiopic font-medium focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all duration-200">
                   <template x-for="(m, idx) in ethiopianMonths" :key="idx">
                     <option :value="idx+1" x-text="m.name"></option>

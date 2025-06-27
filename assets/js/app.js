@@ -270,48 +270,82 @@ document.addEventListener('alpine:init', () => {
     },
 
     convertToGregorian() {
+      console.log('Converting Ethiopian to Gregorian:', { year: this.etiYear, month: this.etiMonth, day: this.etiDay });
+      
       try {
-        if (abushakir && this.etiYear && this.etiMonth && this.etiDay) {
-          // Validate Ethiopian date
-          if (this.etiMonth < 1 || this.etiMonth > 13) {
-            this.gregResult = 'Invalid Month';
+        // Clear result first
+        this.gregResult = '';
+        
+        // Check if we have all required values
+        if (!abushakir) {
+          console.warn('Abushakir library not loaded');
+          this.gregResult = 'Library not loaded';
+          return;
+        }
+        
+        if (!abushakir.EtDatetime) {
+          console.warn('EtDatetime constructor not available');
+          this.gregResult = 'EtDatetime not available';
+          return;
+        }
+        
+        if (!this.etiYear || !this.etiMonth || !this.etiDay) {
+          console.log('Missing required fields');
+          return;
+        }
+        
+        // Validate Ethiopian date
+        if (this.etiMonth < 1 || this.etiMonth > 13) {
+          this.gregResult = 'Invalid Month';
+          return;
+        }
+        
+        // Validate day based on month
+        if (this.etiMonth === 13) {
+          // Pagumen month has only 5 or 6 days (6 in leap years)
+          const maxDays = this.isEthiopianLeapYear(this.etiYear) ? 6 : 5;
+          if (this.etiDay < 1 || this.etiDay > maxDays) {
+            this.gregResult = `Pagumen has only ${maxDays} days`;
             return;
           }
-          
-          // Validate day based on month
-          if (this.etiMonth === 13) {
-            // Pagumen month has only 5 or 6 days (6 in leap years)
-            const maxDays = this.isEthiopianLeapYear(this.etiYear) ? 6 : 5;
-            if (this.etiDay < 1 || this.etiDay > maxDays) {
-              this.gregResult = `Pagumen has only ${maxDays} days`;
-              return;
-            }
-          } else {
-            // Regular months have 30 days
-            if (this.etiDay < 1 || this.etiDay > 30) {
-              this.gregResult = 'Invalid Day (1-30)';
-              return;
-            }
+        } else {
+          // Regular months have 30 days
+          if (this.etiDay < 1 || this.etiDay > 30) {
+            this.gregResult = 'Invalid Day (1-30)';
+            return;
           }
-          
-          // Use object format for EtDatetime constructor
-          const etDate = new abushakir.EtDatetime({
-            year: this.etiYear,
-            month: this.etiMonth,
-            day: this.etiDay
-          });
+        }
+        
+        console.log('Creating EtDatetime with:', { year: this.etiYear, month: this.etiMonth, day: this.etiDay });
+        
+        // Use the correct constructor format based on AbushakirJs documentation
+        const etDate = new abushakir.EtDatetime({
+          year: this.etiYear,
+          month: this.etiMonth,
+          day: this.etiDay,
+          hour: 0,
+          minute: 0,
+          second: 0
+        });
+        
+        console.log('EtDatetime created:', etDate);
+        
+        if (etDate && etDate.moment) {
           const gcDate = new Date(etDate.moment);
+          console.log('Gregorian date:', gcDate);
+          
           this.gregResult = gcDate.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           });
         } else {
-          this.gregResult = '';
+          this.gregResult = 'Conversion failed';
         }
+        
       } catch (error) {
-        console.warn('Ethiopian to Gregorian conversion failed:', error);
-        this.gregResult = 'Invalid Date';
+        console.error('Ethiopian to Gregorian conversion failed:', error);
+        this.gregResult = 'Invalid Date - ' + error.message;
       }
     },
 
@@ -321,26 +355,13 @@ document.addEventListener('alpine:init', () => {
       return (year % 4) === 3;
     },
 
-    // Watcher to adjust day when month changes
-    $watch: {
-      etiMonth() {
-        // If the current day is greater than the available days in the new month, reset to 1
-        const maxDays = this.availableEthiopianDays;
-        if (this.etiDay > maxDays) {
-          this.etiDay = 1;
-          this.convertToGregorian();
-        }
-      },
-      etiYear() {
-        // Check if day needs to be adjusted for leap year changes in Pagumen
-        if (this.etiMonth === 13) {
-          const maxDays = this.availableEthiopianDays;
-          if (this.etiDay > maxDays) {
-            this.etiDay = maxDays;
-            this.convertToGregorian();
-          }
-        }
+    // Method to adjust day when month/year changes
+    adjustDayForMonth() {
+      const maxDays = this.availableEthiopianDays;
+      if (this.etiDay > maxDays) {
+        this.etiDay = maxDays;
       }
+      this.convertToGregorian();
     },
   };
   });
