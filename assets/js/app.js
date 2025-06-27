@@ -67,6 +67,14 @@ document.addEventListener('alpine:init', () => {
       }
     },
 
+    get availableEthiopianDays() {
+      if (this.etiMonth === 13) {
+        // Pagumen month has 5 or 6 days (6 in leap years)
+        return this.isEthiopianLeapYear(this.etiYear) ? 6 : 5;
+      }
+      return 30; // Regular months have 30 days
+    },
+
     get calendarDays() {
       const firstDayOfMonth = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth(), 1);
       const startDay = firstDayOfMonth.getDay(); // Sunday=0, Monday=1, etc.
@@ -263,18 +271,75 @@ document.addEventListener('alpine:init', () => {
 
     convertToGregorian() {
       try {
-        if (abushakir) {
-          const etDate = new abushakir.EtDatetime(this.etiYear, this.etiMonth, this.etiDay);
+        if (abushakir && this.etiYear && this.etiMonth && this.etiDay) {
+          // Validate Ethiopian date
+          if (this.etiMonth < 1 || this.etiMonth > 13) {
+            this.gregResult = 'Invalid Month';
+            return;
+          }
+          
+          // Validate day based on month
+          if (this.etiMonth === 13) {
+            // Pagumen month has only 5 or 6 days (6 in leap years)
+            const maxDays = this.isEthiopianLeapYear(this.etiYear) ? 6 : 5;
+            if (this.etiDay < 1 || this.etiDay > maxDays) {
+              this.gregResult = `Pagumen has only ${maxDays} days`;
+              return;
+            }
+          } else {
+            // Regular months have 30 days
+            if (this.etiDay < 1 || this.etiDay > 30) {
+              this.gregResult = 'Invalid Day (1-30)';
+              return;
+            }
+          }
+          
+          // Use object format for EtDatetime constructor
+          const etDate = new abushakir.EtDatetime({
+            year: this.etiYear,
+            month: this.etiMonth,
+            day: this.etiDay
+          });
           const gcDate = new Date(etDate.moment);
           this.gregResult = gcDate.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           });
+        } else {
+          this.gregResult = '';
         }
       } catch (error) {
         console.warn('Ethiopian to Gregorian conversion failed:', error);
         this.gregResult = 'Invalid Date';
+      }
+    },
+
+    // Helper function to check Ethiopian leap year
+    isEthiopianLeapYear(year) {
+      // Ethiopian leap year calculation: every 4 years, year % 4 === 3
+      return (year % 4) === 3;
+    },
+
+    // Watcher to adjust day when month changes
+    $watch: {
+      etiMonth() {
+        // If the current day is greater than the available days in the new month, reset to 1
+        const maxDays = this.availableEthiopianDays;
+        if (this.etiDay > maxDays) {
+          this.etiDay = 1;
+          this.convertToGregorian();
+        }
+      },
+      etiYear() {
+        // Check if day needs to be adjusted for leap year changes in Pagumen
+        if (this.etiMonth === 13) {
+          const maxDays = this.availableEthiopianDays;
+          if (this.etiDay > maxDays) {
+            this.etiDay = maxDays;
+            this.convertToGregorian();
+          }
+        }
       }
     },
   };

@@ -187,7 +187,7 @@
                   <label class="block text-sm font-medium text-slate-300 mb-2">Day / ቀን</label>
                   <select x-model.number="etiDay" @change="convertToGregorian" 
                           class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white font-medium focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all duration-200">
-                    <template x-for="d in 30" :key="d">
+                    <template x-for="d in availableEthiopianDays" :key="d">
                       <option :value="d" x-text="d"></option>
                     </template>
                   </select>
