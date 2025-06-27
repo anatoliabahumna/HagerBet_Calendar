@@ -1,6 +1,6 @@
 {
-  "name": "Ethiopian Calendar",
-  "short_name": "EthioCal",
+  "name": "ቀን መቁጠሪያ",
+  "short_name": "ቀን መቁጠሪያ",
   "description": "Mobile-first Ethiopian Calendar Progressive Web App",
   "start_url": "./index.html",
   "display": "standalone",

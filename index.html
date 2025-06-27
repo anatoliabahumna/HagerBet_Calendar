@@ -12,7 +12,7 @@
   <!-- TODO: Replace with proper Tailwind installation for production -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./assets/css/style.css" />
-  <title>Ethiopian Calendar</title>
+  <title>ቀን መቁጠሪያ</title>
 </head>
 <body class="bg-slate-900 text-white min-h-screen" x-data="calendarApp()" x-init="init()">
   <!-- Header -->
@@ -22,7 +22,7 @@
         <!-- App Title -->
         <div class="flex items-center space-x-3">
           <div class="text-3xl">📅</div>
-          <h1 class="text-2xl font-bold">Ethiopian Calendar</h1>
+          <h1 class="text-2xl font-bold font-ethiopic">ቀን መቁጠሪያ</h1>
         </div>
         
         <!-- Navigation Tabs -->
@@ -44,7 +44,7 @@
 
   <!-- Main Content -->
   <main class="max-w-4xl mx-auto px-8 py-10">
-    <div x-show="!loaded" class="text-center text-2xl font-semibold text-slate-400">Loading...</div>
+    <div x-show="!loaded" class="text-center text-2xl font-semibold text-slate-400 loading">Loading...</div>
     <template x-if="loaded">
       <div>
     
@@ -144,14 +144,13 @@
           
           <!-- Gregorian to Ethiopian -->
           <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg h-fit">
-            <div class="text-center mb-6">
+                        <div class="text-center mb-6">
               <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg class="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 class="text-lg font-medium text-white mb-1">Gregorian to Ethiopian</h3>
-              <p class="text-amber-300 font-ethiopic text-sm">ግሪጎሪያን ወደ ኢትዮጲያዊ</p>
+              <h3 class="text-lg font-medium text-white">Gregorian to Ethiopian</h3>
             </div>
             
             <div class="space-y-5">
@@ -163,25 +162,23 @@
                        class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white font-medium focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all duration-200" />
               </div>
               
-              <div class="bg-slate-700 rounded-lg p-5 min-h-[80px] flex items-center justify-center">
-                <div class="text-center">
-                  <p class="text-amber-300 font-ethiopic text-xl font-medium" x-text="etiResult || 'ቀን ይምረጡ'"></p>
-                  <p class="text-slate-400 text-xs mt-1">Ethiopian Date</p>
-                </div>
-              </div>
+                             <div class="bg-slate-700 rounded-lg p-5 min-h-[80px] flex items-center justify-center">
+                 <div class="text-center">
+                   <p class="text-amber-300 font-ethiopic text-xl font-medium" x-text="etiResult || 'ቀን ይምረጡ'"></p>
+                 </div>
+               </div>
             </div>
           </div>
           
           <!-- Ethiopian to Gregorian -->
           <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg h-fit">
-            <div class="text-center mb-6">
+                        <div class="text-center mb-6">
               <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 class="text-lg font-medium text-white mb-1">Ethiopian to Gregorian</h3>
-              <p class="text-amber-300 font-ethiopic text-sm">ኢትዮጲያዊ ወደ ግሪጎሪያን</p>
+              <h3 class="text-lg font-medium text-white">Ethiopian to Gregorian</h3>
             </div>
             
             <div class="space-y-5">
@@ -217,12 +214,11 @@
                 </select>
               </div>
               
-              <div class="bg-slate-700 rounded-lg p-5 min-h-[80px] flex items-center justify-center">
-                <div class="text-center">
-                  <p class="text-white text-xl font-medium" x-text="gregResult || 'Select date components'"></p>
-                  <p class="text-slate-400 text-xs mt-1">Gregorian Date</p>
-                </div>
-              </div>
+                             <div class="bg-slate-700 rounded-lg p-5 min-h-[80px] flex items-center justify-center">
+                 <div class="text-center">
+                   <p class="text-white text-xl font-medium" x-text="gregResult || ''"></p>
+                 </div>
+               </div>
             </div>
           </div>
           
@@ -237,7 +233,7 @@
   <div x-show="showModal" 
        @click.self="showModal=false" 
        x-transition.opacity.duration.300ms 
-       class="fixed inset-0 bg-black bg-opacity-75 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+       class="modal-backdrop fixed inset-0 bg-black bg-opacity-60 backdrop-blur-xl flex items-center justify-center z-50 p-4">
     <div x-show="showModal" 
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0 scale-95"
@@ -245,7 +241,7 @@
          x-transition:leave="transition ease-in duration-200"
          x-transition:leave-start="opacity-100 scale-100"
          x-transition:leave-end="opacity-0 scale-95"
-         class="bg-slate-800 rounded-xl p-6 max-w-sm w-full border border-slate-700">
+         class="modal-content bg-slate-800 rounded-xl p-6 max-w-sm w-full border border-slate-700">
       <div class="text-center">
         <h2 class="text-xl font-semibold mb-3" x-text="modalTitle"></h2>
         <p class="text-amber-400 font-ethiopic text-lg font-medium mb-6" x-text="modalSub"></p>

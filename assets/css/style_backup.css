@@ -1,0 +1,331 @@
+/* Ethiopian Calendar - Clean Modern Design */
+
+/* Base styles */
+body {
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Improve text rendering for both fonts */
+* {
+  text-rendering: optimizeLegibility;
+}
+
+.font-ethiopic {
+  font-family: 'Noto Sans Ethiopic', 'Inter', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  line-height: 1.4;
+}
+
+/* Ensure consistent font weights */
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+/* Navigation buttons */
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: rgba(148, 163, 184, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.nav-btn:hover {
+  background-color: rgba(148, 163, 184, 0.2);
+  color: #e2e8f0;
+  transform: scale(1.1); /* Increased scale for more prominent hover */
+}
+
+.nav-btn:active {
+  transform: scale(0.95);
+}
+
+/* Today button */
+.today-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background-color: #4f46e5; /* Indigo-600 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.today-btn:hover {
+  background-color: #4f46e5; /* Indigo-600 */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+}
+
+.today-btn:active {
+  transform: translateY(0);
+}
+
+/* Calendar day cells */
+.calendar-day {
+  position: relative;
+  height: 60px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: transparent;
+}
+
+.calendar-day:hover {
+  background-color: rgba(148, 163, 184, 0.15);
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.calendar-day.today {
+  background-color: #4f46e5; /* Indigo-600 */
+  color: white;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+  border: 2px solid #6366f1; /* Indigo-500 */
+  animation: pulse-indigo 2s infinite;
+}
+
+.calendar-day.today:hover {
+  background-color: #4338ca; /* Indigo-700 */
+  transform: scale(1.06);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.5);
+}
+
+/* New keyframe for indigo pulse */
+@keyframes pulse-indigo {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+  }
+}
+
+.calendar-day.today .font-ethiopic {
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+/* Month list items */
+.month-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: transparent;
+}
+
+.month-item:hover {
+  background-color: rgba(148, 163, 184, 0.1);
+  transform: translateX(4px);
+}
+
+/* Form inputs */
+.convert-input {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.convert-input:focus {
+  outline: none;
+  border-color: #6366f1; /* Indigo-500 */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2), 0 0 15px rgba(79, 70, 229, 0.4);
+  background-color: rgba(148, 163, 184, 0.2);
+}
+
+.convert-input::placeholder {
+  color: #94a3b8;
+}
+
+.convert-select {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.convert-select:focus {
+  outline: none;
+  border-color: #6366f1; /* Indigo-500 */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2), 0 0 15px rgba(79, 70, 229, 0.4);
+  background-color: rgba(148, 163, 184, 0.2);
+}
+
+.convert-select option {
+  background-color: #1e293b;
+  color: white;
+}
+
+/* Refined converter styles */
+.converter-card {
+  background: #1e293b;
+  transition: all 0.2s ease;
+  border: 1px solid #334155;
+}
+
+.converter-card:hover {
+  border-color: #475569;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Subtle date picker styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: #f59e0b;
+  border-radius: 3px;
+  padding: 2px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Equal height result boxes */
+.result-box {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #334155;
+  transition: all 0.2s ease;
+}
+
+.result-box:hover {
+  background: #3f4756;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  main {
+    padding: 1rem;
+  }
+  
+  .font-ethiopic {
+    font-size: 0.9em;
+    line-height: 1.3;
+  }
+  
+  .calendar-day {
+    height: 50px;
+    min-height: 50px;
+  }
+  
+  .calendar-day span:first-child {
+    font-size: 16px;
+  }
+  
+  .calendar-day span:last-child {
+    font-size: 11px;
+  }
+  
+  header .max-w-4xl {
+    padding: 1rem;
+  }
+  
+  nav {
+    padding: 2px;
+  }
+  
+  nav button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  /* Converter responsive adjustments */
+  .grid.lg\\:grid-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .bg-slate-800.rounded-xl {
+    padding: 1rem;
+  }
+  
+  .grid.grid-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .space-y-5 > * + * {
+    margin-top: 1rem;
+  }
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Focus styles for accessibility */
+button:focus-visible, 
+input:focus-visible, 
+select:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}

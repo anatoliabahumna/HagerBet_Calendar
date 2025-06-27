@@ -1,15 +1,54 @@
-/* Ethiopian Calendar - Clean Modern Design */
+/* ቀን መቁጠሪያ - Futuristic Modern Design */
 
-/* Base styles */
+/* Advanced base styles with dynamic background */
 body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 70%, #0f172a 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Subtle animated background gradient */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Floating particle effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.05), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.03), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.04), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.02), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: sparkle 15s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes sparkle {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100px); }
 }
 
 /* Improve text rendering for both fonts */
 * {
   text-rendering: optimizeLegibility;
+  position: relative;
+  z-index: 2;
 }
 
 .font-ethiopic {
@@ -28,58 +67,133 @@ body {
   font-weight: 600;
 }
 
-/* Navigation buttons */
+/* Enhanced header with glass morphism */
+header {
+  backdrop-filter: blur(20px) !important;
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1) !important;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* App title with subtle glow */
+h1.font-ethiopic {
+  text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+  animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  0% { text-shadow: 0 0 20px rgba(251, 191, 36, 0.2); }
+  100% { text-shadow: 0 0 30px rgba(251, 191, 36, 0.4); }
+}
+
+/* Navigation with glass morphism */
+nav {
+  backdrop-filter: blur(10px) !important;
+  background: rgba(51, 65, 85, 0.6) !important;
+  border: 1px solid rgba(148, 163, 184, 0.1) !important;
+}
+
+nav button {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+nav button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s;
+}
+
+nav button:hover::before {
+  left: 100%;
+}
+
+/* Enhanced navigation buttons */
 .nav-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8px;
-  background-color: rgba(148, 163, 184, 0.1);
-  border: none;
+  background-color: rgba(148, 163, 184, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.15);
   border-radius: 8px;
   color: #94a3b8;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scale(1);
+  backdrop-filter: blur(10px);
 }
 
 .nav-btn:hover {
-  background-color: rgba(148, 163, 184, 0.2);
+  background-color: rgba(148, 163, 184, 0.15);
   color: #e2e8f0;
-  transform: scale(1.1); /* Increased scale for more prominent hover */
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .nav-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.98);
 }
 
-/* Today button */
+/* Futuristic today button */
 .today-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8px 16px;
-  background-color: #4f46e5; /* Indigo-600 */
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: white;
   border: none;
   border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.today-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.today-btn:hover::before {
+  left: 100%;
 }
 
 .today-btn:hover {
-  background-color: #4f46e5; /* Indigo-600 */
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(79, 70, 229, 0.5);
 }
 
 .today-btn:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
 }
 
-/* Calendar day cells */
+/* Enhanced calendar grid with glass morphism */
+.bg-gradient-to-br {
+  background: rgba(30, 41, 59, 0.6) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(148, 163, 184, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Sophisticated calendar day cells */
 .calendar-day {
   position: relative;
   height: 60px;
@@ -89,168 +203,209 @@ body {
   justify-content: center;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  background-color: transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(51, 65, 85, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  overflow: hidden;
+}
+
+.calendar-day::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.calendar-day:hover::before {
+  opacity: 1;
 }
 
 .calendar-day:hover {
-  background-color: rgba(148, 163, 184, 0.15);
-  transform: scale(1.03);
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .calendar-day.today {
-  background-color: #4f46e5; /* Indigo-600 */
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: white;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
-  border: 2px solid #6366f1; /* Indigo-500 */
-  animation: pulse-indigo 2s infinite;
+  box-shadow: 0 8px 32px rgba(79, 70, 229, 0.4);
+  border: 1px solid #6366f1;
+  animation: todayPulse 2s ease-in-out infinite;
+}
+
+@keyframes todayPulse {
+  0%, 100% {
+    box-shadow: 0 8px 32px rgba(79, 70, 229, 0.4), 0 0 0 0 rgba(79, 70, 229, 0.3);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(79, 70, 229, 0.6), 0 0 0 8px rgba(79, 70, 229, 0);
+  }
 }
 
 .calendar-day.today:hover {
-  background-color: #4338ca; /* Indigo-700 */
-  transform: scale(1.06);
-  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.5);
-}
-
-/* New keyframe for indigo pulse */
-@keyframes pulse-indigo {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
-  }
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 16px 48px rgba(79, 70, 229, 0.5);
 }
 
 .calendar-day.today .font-ethiopic {
   color: #fbbf24;
   font-weight: 600;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
 }
 
-/* Month list items */
-.month-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background-color: transparent;
+/* Glass morphism for all slate-800 elements */
+.bg-slate-800 {
+  background: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-.month-item:hover {
-  background-color: rgba(148, 163, 184, 0.1);
-  transform: translateX(4px);
-}
-
-/* Form inputs */
-.convert-input {
+.bg-slate-800::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
   width: 100%;
-  padding: 12px 16px;
-  background-color: rgba(148, 163, 184, 0.1);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 8px;
-  color: white;
-  font-size: 14px;
-  transition: all 0.2s ease;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.05), transparent);
+  transition: left 0.8s;
 }
 
-.convert-input:focus {
-  outline: none;
-  border-color: #6366f1; /* Indigo-500 */
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2), 0 0 15px rgba(79, 70, 229, 0.4);
-  background-color: rgba(148, 163, 184, 0.2);
+.bg-slate-800:hover::before {
+  left: 100%;
 }
 
-.convert-input::placeholder {
-  color: #94a3b8;
+.bg-slate-800:hover {
+  transform: translateY(-8px);
+  border-color: rgba(251, 191, 36, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
-.convert-select {
-  width: 100%;
-  padding: 12px 16px;
-  background-color: rgba(148, 163, 184, 0.1);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 8px;
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+/* Enhanced form inputs */
+input, select {
+  background: rgba(51, 65, 85, 0.6) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.convert-select:focus {
-  outline: none;
-  border-color: #6366f1; /* Indigo-500 */
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2), 0 0 15px rgba(79, 70, 229, 0.4);
-  background-color: rgba(148, 163, 184, 0.2);
+input:focus, select:focus {
+  border-color: rgba(251, 191, 36, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1), 0 8px 25px rgba(251, 191, 36, 0.15) !important;
+  transform: translateY(-2px);
 }
 
-.convert-select option {
-  background-color: #1e293b;
-  color: white;
+/* Sophisticated result boxes */
+.bg-slate-700 {
+  background: rgba(51, 65, 85, 0.6) !important;
+  backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Refined converter styles */
-.converter-card {
-  background: #1e293b;
-  transition: all 0.2s ease;
-  border: 1px solid #334155;
+.bg-slate-700::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(transparent, rgba(251, 191, 36, 0.1), transparent);
+  animation: rotate 4s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
-.converter-card:hover {
-  border-color: #475569;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Subtle date picker styling */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  background-color: #f59e0b;
-  border-radius: 3px;
-  padding: 2px;
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator:hover {
+.bg-slate-700:hover::before {
   opacity: 1;
 }
 
-/* Equal height result boxes */
-.result-box {
-  min-height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #334155;
-  transition: all 0.2s ease;
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-.result-box:hover {
-  background: #3f4756;
+.bg-slate-700:hover {
+  transform: translateY(-2px);
+  border-color: rgba(251, 191, 36, 0.3);
+  box-shadow: 0 12px 40px rgba(251, 191, 36, 0.1);
 }
 
-/* Custom scrollbar */
+/* Shimmer loading effect */
+.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Advanced date picker styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: linear-gradient(135deg, #f59e0b, #eab308);
+  border-radius: 4px;
+  padding: 3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+/* Sophisticated scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
-  border-radius: 3px;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.6), rgba(245, 158, 11, 0.6));
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.8), rgba(245, 158, 11, 0.8));
 }
 
-/* Responsive design */
+/* Responsive design with enhanced mobile experience */
 @media (max-width: 768px) {
+  body::before {
+    background-size: 100px 50px;
+  }
+  
   main {
     padding: 1rem;
   }
@@ -265,12 +420,8 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     min-height: 50px;
   }
   
-  .calendar-day span:first-child {
-    font-size: 16px;
-  }
-  
-  .calendar-day span:last-child {
-    font-size: 11px;
+  .calendar-day:hover {
+    transform: translateY(-2px) scale(1.01);
   }
   
   header .max-w-4xl {
@@ -286,7 +437,6 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     font-size: 12px;
   }
   
-  /* Converter responsive adjustments */
   .grid.lg\\:grid-cols-2 {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -304,28 +454,52 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   .space-y-5 > * + * {
     margin-top: 1rem;
   }
+  
+  .bg-slate-800:hover {
+    transform: translateY(-4px);
+  }
 }
 
-/* Animation for smooth transitions */
-@keyframes fadeIn {
-  from {
+/* Advanced animation for page transitions */
+@keyframes fadeInUp {
+  0% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(30px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
 .fade-in {
-  animation: fadeIn 0.3s ease-out;
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Focus styles for accessibility */
+/* Accessibility focus styles with futuristic touch */
 button:focus-visible, 
 input:focus-visible, 
 select:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #f59e0b;
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+}
+
+/* Performance optimizations */
+.calendar-day, .bg-slate-800, .nav-btn, .today-btn {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* Enhanced modal with glass morphism */
+.modal-backdrop {
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  background: rgba(30, 41, 59, 0.9) !important;
+  backdrop-filter: blur(30px) !important;
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5) !important;
 }
