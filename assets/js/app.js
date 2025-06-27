@@ -24,22 +24,22 @@ document.addEventListener('alpine:init', () => {
     etiYear: 2017,
     gregResult: '',
 
-    // Constants
-    weekdayHeaders: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    // Constants with Amharic names
+    weekdayHeaders: ['እሑድ', 'ሰኞ', 'ማክሰኞ', 'ረቡዕ', 'ሐሙስ', 'ዓርብ', 'ቅዳሜ'],
     ethiopianMonths: [
-      { name: 'Meskerem' },
-      { name: 'Tikimt' },
-      { name: 'Hidar' },
-      { name: 'Tahesas' },
-      { name: 'Tir' },
-      { name: 'Yekatit' },
-      { name: 'Megabit' },
-      { name: 'Miazia' },
-      { name: 'Ginbot' },
-      { name: 'Sene' },
-      { name: 'Hamle' },
-      { name: 'Nehase' },
-      { name: 'Pagumen' },
+      { name: 'መስከረም', english: 'Meskerem' },
+      { name: 'ጥቅምት', english: 'Tikimt' },
+      { name: 'ህዳር', english: 'Hidar' },
+      { name: 'ታህሳስ', english: 'Tahesas' },
+      { name: 'ጥር', english: 'Tir' },
+      { name: 'የካቲት', english: 'Yekatit' },
+      { name: 'መጋቢት', english: 'Megabit' },
+      { name: 'ሚያዝያ', english: 'Miazia' },
+      { name: 'ግንቦት', english: 'Ginbot' },
+      { name: 'ሰኔ', english: 'Sene' },
+      { name: 'ሐምሌ', english: 'Hamle' },
+      { name: 'ነሐሴ', english: 'Nehase' },
+      { name: 'ጳጉሜ', english: 'Pagumen' },
     ],
 
     // Computed
@@ -238,8 +238,8 @@ document.addEventListener('alpine:init', () => {
       const et = dateObj.ethiopian;
       this.modalSub = `${this.ethiopianMonths[et.month - 1].name} ${et.day}, ${et.year}`;
       
-      // Show the day of week in Ethiopian context
-      this.additionalInfo = `Day ${et.day} of ${this.ethiopianMonths[et.month - 1].name}`;
+      // Remove the unnecessary additional info
+      this.additionalInfo = '';
       this.showModal = true;
     },
 

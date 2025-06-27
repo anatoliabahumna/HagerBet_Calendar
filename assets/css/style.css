@@ -7,9 +7,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Improve text rendering for both fonts */
+* {
+  text-rendering: optimizeLegibility;
+}
+
 .font-ethiopic {
   font-family: 'Noto Sans Ethiopic', 'Inter', sans-serif;
   font-weight: 500;
+  letter-spacing: 0.025em;
+  line-height: 1.4;
+}
+
+/* Ensure consistent font weights */
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
 }
 
 /* Navigation buttons */
@@ -109,6 +125,7 @@ body {
 
 .calendar-day.today .font-ethiopic {
   color: #fbbf24;
+  font-weight: 600;
 }
 
 /* Month list items */
@@ -175,6 +192,45 @@ body {
   color: white;
 }
 
+/* Refined converter styles */
+.converter-card {
+  background: #1e293b;
+  transition: all 0.2s ease;
+  border: 1px solid #334155;
+}
+
+.converter-card:hover {
+  border-color: #475569;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Subtle date picker styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: #f59e0b;
+  border-radius: 3px;
+  padding: 2px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Equal height result boxes */
+.result-box {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #334155;
+  transition: all 0.2s ease;
+}
+
+.result-box:hover {
+  background: #3f4756;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -197,6 +253,11 @@ body {
 @media (max-width: 768px) {
   main {
     padding: 1rem;
+  }
+  
+  .font-ethiopic {
+    font-size: 0.9em;
+    line-height: 1.3;
   }
   
   .calendar-day {
@@ -223,6 +284,25 @@ body {
   nav button {
     padding: 6px 12px;
     font-size: 12px;
+  }
+  
+  /* Converter responsive adjustments */
+  .grid.lg\\:grid-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .bg-slate-800.rounded-xl {
+    padding: 1rem;
+  }
+  
+  .grid.grid-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .space-y-5 > * + * {
+    margin-top: 1rem;
   }
 }
 

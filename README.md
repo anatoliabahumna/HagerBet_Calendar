@@ -5,7 +5,7 @@ A modern, responsive Ethiopian calendar web application built with vanilla JavaS
 ## Features
 
 ✨ **Dual Calendar System**
-- Ethiopian calendar display with month navigation
+- Ethiopian calendar display with Amharic month names and weekdays
 - Gregorian calendar integration
 - Real-time date synchronization
 
@@ -18,7 +18,8 @@ A modern, responsive Ethiopian calendar web application built with vanilla JavaS
 - Dark theme with elegant UI
 - Responsive design for all devices
 - Smooth animations and transitions
-- Beautiful Ethiopian typography with Noto Sans Ethiopic
+- Beautiful Ethiopian typography with Noto Sans Ethiopic font
+- Consistent font weights and sizes throughout
 
 📱 **Progressive Web App**
 - Offline support with service worker
@@ -90,20 +91,29 @@ The Ethiopian calendar is based on the ancient Coptic calendar and has:
 - New Year starts on September 11 (or 12 in leap years)
 - Currently about 7-8 years behind the Gregorian calendar
 
-### Ethiopian Months
-1. **Meskerem** (መስከረም) - September/October
-2. **Tikimt** (ጥቅምት) - October/November
-3. **Hidar** (ህዳር) - November/December
-4. **Tahesas** (ታህሳስ) - December/January
-5. **Tir** (ጥር) - January/February
-6. **Yekatit** (የካቲት) - February/March
-7. **Megabit** (መጋቢት) - March/April
-8. **Miazia** (ሚያዝያ) - April/May
-9. **Ginbot** (ግንቦት) - May/June
-10. **Sene** (ሰኔ) - June/July
-11. **Hamle** (ሐምሌ) - July/August
-12. **Nehase** (ነሐሴ) - August/September
-13. **Pagumen** (ጳጉሜን) - September (5-6 days)
+### Ethiopian Months (የወረሶች ስሞች)
+1. **መስከረም** (Meskerem) - September/October
+2. **ጥቅምት** (Tikimt) - October/November
+3. **ህዳር** (Hidar) - November/December
+4. **ታህሳስ** (Tahesas) - December/January
+5. **ጥር** (Tir) - January/February
+6. **የካቲት** (Yekatit) - February/March
+7. **መጋቢት** (Megabit) - March/April
+8. **ሚያዝያ** (Miazia) - April/May
+9. **ግንቦት** (Ginbot) - May/June
+10. **ሰኔ** (Sene) - June/July
+11. **ሐምሌ** (Hamle) - July/August
+12. **ነሐሴ** (Nehase) - August/September
+13. **ጳጉሜ** (Pagumen) - September (5-6 days)
+
+### Weekdays (የሳምንቱ ቀናት)
+- **እሑድ** (Sunday)
+- **ሰኞ** (Monday)
+- **ማክሰኞ** (Tuesday)
+- **ረቡዕ** (Wednesday)
+- **ሐሙስ** (Thursday)
+- **ዓርብ** (Friday)
+- **ቅዳሜ** (Saturday)
 
 ## Contributing
 

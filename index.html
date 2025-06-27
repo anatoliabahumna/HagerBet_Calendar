@@ -8,7 +8,7 @@
   <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <!-- TODO: Replace with proper Tailwind installation for production -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./assets/css/style.css" />
@@ -72,7 +72,7 @@
 
           <div class="text-center">
             <h2 class="text-2xl font-semibold text-white" x-text="gregorianMonthLabel"></h2>
-            <p class="text-amber-400 font-ethiopic text-lg mt-1" x-text="ethiopianMonthLabel"></p>
+            <p class="text-amber-400 font-ethiopic text-xl font-medium mt-1" x-text="ethiopianMonthLabel"></p>
           </div>
 
           <div class="flex items-center space-x-4">
@@ -108,7 +108,7 @@
           <div class="grid grid-cols-7 mb-4">
             <template x-for="(day, index) in weekdayHeaders" :key="index">
               <div class="text-center py-3">
-                <span class="text-sm font-medium text-slate-400" x-text="day"></span>
+                <span class="text-sm font-medium text-slate-400 font-ethiopic" x-text="day"></span>
               </div>
             </template>
           </div>
@@ -121,7 +121,7 @@
                    :class="date.isToday ? 'calendar-day today' : 'calendar-day'">
                 <div class="text-center">
                   <span class="block text-lg font-medium" x-text="date.gregorianDate"></span>
-                  <span class="block text-xs font-ethiopic text-amber-300 mt-1" x-text="date.ethiopianDate"></span>
+                  <span class="block text-sm font-ethiopic text-amber-300 mt-1" x-text="date.ethiopianDate"></span>
                 </div>
               </div>
             </template>
@@ -133,56 +133,99 @@
 
     <!-- Convert View -->
     <template x-if="currentTab === 'convert'" x-transition:enter="fade-in">
-      <div class="space-y-6">
-        <h2 class="text-2xl font-semibold text-center">Date Converter</h2>
-        
-        <!-- Gregorian to Ethiopian -->
-        <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
-          <h3 class="text-lg font-medium mb-4 text-indigo-400">Gregorian to Ethiopian</h3>
-          <div class="mb-4">
-            <label class="block text-sm font-medium text-slate-300 mb-2">Select Date</label>
-            <input type="date" 
-                   x-model="gregorianInput" 
-                   @input="convertToEthiopian" 
-                   class="convert-input" />
-          </div>
-          <div class="mt-4 p-4 bg-slate-700 rounded-lg border border-slate-600 shadow-inner">
-            <p class="text-amber-300 font-ethiopic text-xl font-bold" x-text="etiResult || 'Select a date above'"></p>
-          </div>
+      <div class="space-y-8">
+        <div class="text-center">
+          <h2 class="text-3xl font-semibold text-white mb-2">Date Converter</h2>
+          <p class="text-amber-300 font-ethiopic text-lg">የቀን መቀየሪያ</p>
         </div>
         
-        <!-- Ethiopian to Gregorian -->
-        <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
-          <h3 class="text-lg font-medium mb-4 text-indigo-400">Ethiopian to Gregorian</h3>
-          <div class="grid grid-cols-3 gap-3 mb-4">
-            <div>
-              <label class="block text-sm font-medium text-slate-300 mb-2">Day</label>
-              <select x-model.number="etiDay" @change="convertToGregorian" class="convert-select">
-                <template x-for="d in 30" :key="d">
-                  <option :value="d" x-text="d"></option>
-                </template>
-              </select>
+        <!-- Converter Cards Container -->
+        <div class="grid lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          
+          <!-- Gregorian to Ethiopian -->
+          <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg h-fit">
+            <div class="text-center mb-6">
+              <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-medium text-white mb-1">Gregorian to Ethiopian</h3>
+              <p class="text-amber-300 font-ethiopic text-sm">ግሪጎሪያን ወደ ኢትዮጲያዊ</p>
             </div>
-            <div>
-              <label class="block text-sm font-medium text-slate-300 mb-2">Month</label>
-              <select x-model.number="etiMonth" @change="convertToGregorian" class="convert-select">
-                <template x-for="(m, idx) in ethiopianMonths" :key="idx">
-                  <option :value="idx+1" x-text="m.name"></option>
-                </template>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-slate-300 mb-2">Year</label>
-              <input type="number" 
-                     x-model.number="etiYear" 
-                     @input="convertToGregorian" 
-                     placeholder="2017" 
-                     class="convert-input" />
+            
+            <div class="space-y-5">
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Select Gregorian Date</label>
+                <input type="date" 
+                       x-model="gregorianInput" 
+                       @input="convertToEthiopian" 
+                       class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white font-medium focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all duration-200" />
+              </div>
+              
+              <div class="bg-slate-700 rounded-lg p-5 min-h-[80px] flex items-center justify-center">
+                <div class="text-center">
+                  <p class="text-amber-300 font-ethiopic text-xl font-medium" x-text="etiResult || 'ቀን ይምረጡ'"></p>
+                  <p class="text-slate-400 text-xs mt-1">Ethiopian Date</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="mt-4 p-4 bg-slate-700 rounded-lg border border-slate-600 shadow-inner">
-            <p class="text-white text-xl font-bold" x-text="gregResult || 'Select date components above'"></p>
+          
+          <!-- Ethiopian to Gregorian -->
+          <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg h-fit">
+            <div class="text-center mb-6">
+              <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-medium text-white mb-1">Ethiopian to Gregorian</h3>
+              <p class="text-amber-300 font-ethiopic text-sm">ኢትዮጲያዊ ወደ ግሪጎሪያን</p>
+            </div>
+            
+            <div class="space-y-5">
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-2">Day / ቀን</label>
+                  <select x-model.number="etiDay" @change="convertToGregorian" 
+                          class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white font-medium focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all duration-200">
+                    <template x-for="d in 30" :key="d">
+                      <option :value="d" x-text="d"></option>
+                    </template>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-2">Year / አመት</label>
+                  <input type="number" 
+                         x-model.number="etiYear" 
+                         @input="convertToGregorian" 
+                         placeholder="2017" 
+                         min="1900" 
+                         max="2100"
+                         class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white font-medium focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all duration-200" />
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Month / ወር</label>
+                <select x-model.number="etiMonth" @change="convertToGregorian" 
+                        class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg text-white font-ethiopic font-medium focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all duration-200">
+                  <template x-for="(m, idx) in ethiopianMonths" :key="idx">
+                    <option :value="idx+1" x-text="m.name"></option>
+                  </template>
+                </select>
+              </div>
+              
+              <div class="bg-slate-700 rounded-lg p-5 min-h-[80px] flex items-center justify-center">
+                <div class="text-center">
+                  <p class="text-white text-xl font-medium" x-text="gregResult || 'Select date components'"></p>
+                  <p class="text-slate-400 text-xs mt-1">Gregorian Date</p>
+                </div>
+              </div>
+            </div>
           </div>
+          
         </div>
       </div>
     </template>
@@ -205,9 +248,8 @@
          class="bg-slate-800 rounded-xl p-6 max-w-sm w-full border border-slate-700">
       <div class="text-center">
         <h2 class="text-xl font-semibold mb-3" x-text="modalTitle"></h2>
-        <p class="text-amber-400 font-ethiopic text-lg mb-3" x-text="modalSub"></p>
-        <p class="text-slate-400 text-sm" x-text="additionalInfo"></p>
-        <button @click="showModal=false" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+        <p class="text-amber-400 font-ethiopic text-lg font-medium mb-6" x-text="modalSub"></p>
+        <button @click="showModal=false" class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium">
           Close
         </button>
       </div>
@@ -216,15 +258,5 @@
 
   <script type="module" src="./assets/js/app.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <!-- Service worker disabled to prevent CORS issues during development -->
-  <!-- 
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js');
-      });
-    }
-  </script>
-  -->
   </body>
 </html>
