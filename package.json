@@ -21,6 +21,7 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
+		"@js-temporal/polyfill": "^0.5.1",
 		"abushakir": "^1.5.2"
 	}
 }
