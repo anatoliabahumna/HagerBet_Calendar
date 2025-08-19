@@ -1,6 +1,6 @@
 <script lang="ts">
 import { viewDate, getMonthDays, ethiopianMonths, ethiopianMonthYear, convertGregorian, convertEthiopian } from '$lib/calendar';
-import type { DayCell } from '$lib/calendar';
+import { fade } from 'svelte/transition';
 
 let gInput = '';
 let eDay = 1;
@@ -14,61 +14,59 @@ $: current = $viewDate;
 $: monthDays = getMonthDays(current);
 $: gLabel = current.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 $: eLabel = ethiopianMonthYear(current);
+$: keyLabel = `${current.getFullYear()}-${current.getMonth()}`;
 </script>
 
-<h1>ቀን መቁጠሪያ</h1>
+<section class="flex flex-col items-center gap-4">
+  <h2 class="sr-only">Calendar navigation</h2>
+  <div class="flex items-center gap-2">
+    <button class="btn" on:click={viewDate.prev} aria-label="Previous month">&lt;</button>
+    <div class="text-lg font-medium">{gLabel} / {eLabel}</div>
+    <button class="btn" on:click={viewDate.next} aria-label="Next month">&gt;</button>
+    <button class="btn" on:click={viewDate.today}>Today</button>
+  </div>
 
-<section class="nav">
-  <button on:click={viewDate.prev}>&lt;</button>
-  <div>{gLabel} / {eLabel}</div>
-  <button on:click={viewDate.next}>&gt;</button>
-  <button on:click={viewDate.today}>Today</button>
-</section>
-
-<section class="calendar">
-  <div class="grid">
+  {#key keyLabel}
+  <div class="grid grid-cols-7 gap-1 sm:gap-2 w-full max-w-xl" transition:fade>
     {#each ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] as w}
-      <div class="cell head">{w}</div>
+      <div class="text-center font-medium text-gray-500 dark:text-gray-400">{w}</div>
     {/each}
     {#each monthDays as day}
       {#if day}
-        <div class="cell {day.isToday ? 'today' : ''}">
-          <div class="g">{day.date.getDate()}</div>
-          <div class="e">{day.ethiopian.day}</div>
+        <div class={`h-20 p-2 card flex flex-col items-center justify-center text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${day.isToday ? 'bg-primary text-white' : ''}`}>
+          <div>{day.date.getDate()}</div>
+          <div class="text-xs opacity-70">{day.ethiopian.day}</div>
         </div>
       {:else}
-        <div class="cell empty"></div>
+        <div class="h-20 p-2"></div>
       {/if}
     {/each}
   </div>
+  {/key}
 </section>
 
-<section class="convert">
-  <h2>Gregorian to Ethiopian</h2>
-  <input type="date" bind:value={gInput} />
-  {#if gOutput}<p class="result">{gOutput}</p>{/if}
-
-  <h2>Ethiopian to Gregorian</h2>
-  <div class="ethiopian-inputs">
-    <input type="number" min="1" max="30" bind:value={eDay} />
-    <select bind:value={eMonth}>
-      {#each ethiopianMonths as m, i}
-        <option value={i+1}>{m}</option>
-      {/each}
-    </select>
-    <input type="number" bind:value={eYear} />
+<section class="card p-6 mt-10 w-full max-w-md mx-auto space-y-6">
+  <div>
+    <h2 class="text-lg font-semibold mb-2">Gregorian to Ethiopian</h2>
+    <label class="sr-only" for="gInput">Gregorian date</label>
+    <input id="gInput" type="date" bind:value={gInput} class="w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800" />
+    {#if gOutput}<p class="mt-2 font-medium text-primary" aria-live="polite">{gOutput}</p>{/if}
   </div>
-  {#if eOutput}<p class="result">{eOutput}</p>{/if}
-</section>
 
-<style>
-  h1 { text-align:center; margin:1rem 0; }
-  .nav { display:flex; gap:0.5rem; justify-content:center; align-items:center; margin-bottom:1rem; }
-  .calendar .grid { display:grid; grid-template-columns: repeat(7,1fr); gap:0.25rem; }
-  .cell { padding:0.5rem; border:1px solid #ccc; text-align:center; min-height:3rem; }
-  .cell.head { font-weight:bold; background:#f0f0f0; }
-  .cell.today { background:#fee; }
-  .convert { margin-top:2rem; max-width:20rem; margin-left:auto; margin-right:auto; }
-  .ethiopian-inputs { display:flex; gap:0.5rem; }
-  .result { margin-top:0.5rem; font-weight:bold; }
-</style>
+  <div>
+    <h2 class="text-lg font-semibold mb-2">Ethiopian to Gregorian</h2>
+    <div class="flex gap-2">
+      <label class="sr-only" for="eDay">Day</label>
+      <input id="eDay" type="number" min="1" max="30" bind:value={eDay} class="w-16 rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800" />
+      <label class="sr-only" for="eMonth">Month</label>
+      <select id="eMonth" bind:value={eMonth} class="flex-1 rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800">
+        {#each ethiopianMonths as m, i}
+          <option value={i+1}>{m}</option>
+        {/each}
+      </select>
+      <label class="sr-only" for="eYear">Year</label>
+      <input id="eYear" type="number" bind:value={eYear} class="w-24 rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800" />
+    </div>
+    {#if eOutput}<p class="mt-2 font-medium text-primary" aria-live="polite">{eOutput}</p>{/if}
+  </div>
+</section>
